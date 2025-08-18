@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Almond AgriBusiness | Services</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .services-section {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .services-section h1, .services-section h2 {
+      color: #0f5132;
+      margin-bottom: 1rem;
+    }
+    .services-section ul {
+      margin-left: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    details summary {
+      font-weight: bold;
+      color: #0f5132;
+      cursor: pointer;
+      margin-bottom: 0.5rem;
+    }
+    details ul {
+      margin-top: 0.5rem;
+      margin-left: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo">🥛 Almond AgriBusiness</div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="shop.html">Shop</a>
+      <a href="order.html">Order</a>
+      <a href="services.html" class="active">Services</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="cta">
+      <a href="#">Login</a>
+      <a href="#" class="cart">🛒 <span id="cart-count">0</span></a>
+    </div>
+  </header>
+
+  <section class="hero-banner-slideshow">
+    <div class="slides">
+      <div class="slide active" style="background-image: url('Imgs/F.jpg');"></div>
+      <div class="slide" style="background-image: url('Imgs/N.jpg');"></div>
+      <div class="slide" style="background-image: url('Imgs/T.jpg');"></div>
+      <div class="slide" style="background-image: url('Imgs/P.jpg');"></div>
+    </div>
+    <div class="hero-content">
+      <h1>Our Services</h1>
+      <p>Empowering farmers and processors through innovation and training.</p>
+    </div>
+  </section>
+
+  <section class="services-section">
+    <h2>1. Dairy Value Chain Trainings</h2>
+    <ul>
+      <li>Food Processing Technology Solutions:
+        <ul>
+          <li>Process Optimization</li>
+          <li>Milk Processing Plant Installations</li>
+          <li>Value Addition</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2>2. Dairy Farming</h2>
+    <ul>
+      <li>Dairy Feeds Ratios</li>
+      <li>Animal Husbandry</li>
+      <li>Farm Hygiene</li>
+      <li>Smart Agriculture</li>
+      <li>On-farm Trainings</li>
+    </ul>
+
+    <h2>3. Products</h2>
+    <details>
+      <summary>Animal Feeds</summary>
+      <ul>
+        <li>Alfalfa</li>
+        <li>Silage</li>
+        <li>Hay</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Animal Feed (Processed)</summary>
+      <ul>
+        <li>Pelleted Dairy Meal</li>
+        <li>Calf Pellets</li>
+        <li>Chicken Feeds</li>
+        <li>Pig Feeds</li>
+        <li>Rabbit Feeds</li>
+      </ul>
+    </details>
+  </section>
+
+  <footer class="footer">
+    <p>📞 0702 822 215 | ✉️ martsonltd2025@outlook.com</p>
+    <div class="social">
+      <a href="https://instagram.com/yummydairy" target="_blank">📸 Instagram</a>
+      <a href="https://wa.me/254702822215" target="_blank">💬 WhatsApp</a>
+      <a href="https://facebook.com/yummydairy" target="_blank">👍 Facebook</a>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      document.getElementById('cart-count').textContent = cart.length;
+
+      let currentSlide = 0;
+      const slides = document.querySelectorAll('.hero-banner-slideshow .slide');
+      setInterval(() => {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+      }, 4000);
+    });
+  </script>
+</body>
+</html>

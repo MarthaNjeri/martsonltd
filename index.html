@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Almond Agribusiness</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">🥛 Almond AgriBusiness</div>
+    <nav class="main-nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="shop.html">Shop</a>
+      <a href="order.html">Order</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="cta">
+      <a href="#">Login</a>
+      <a href="#" class="cart">🛒 <span id="cart-count">0</span></a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-banner-slideshow">
+    <div class="slides">
+      <div class="slide active" style="background-image: url('Imgs/F.jpg');"></div>
+      <div class="slide" style="background-image: url('Imgs/N.jpg');"></div>
+      <div class="slide" style="background-image: url('Imgs/T.jpg');"></div>
+      <div class="slide" style="background-image: url('Imgs/P.jpg');"></div>
+    </div>
+    <div class="hero-content">
+      <h1>Farm-Fresh Dairy to Your Door</h1>
+      <p>Naturally produced, ethically delivered.</p>
+      <a href="shop.html" class="shop-now-btn">🛒 Start Shopping</a>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Categories -->
+    <section class="categories">
+      <h2>Shop by Category</h2>
+      <div class="category-list">
+        <div class="category">🥛 RawMilk</div>
+        <div class="category">🍶 Yoghurt Strawberry</div>
+        <div class="category">🍶 Yoghurt Vanilla</div>
+       <div class="category">🍶 ESL</div>
+        <div class="category">🧈 Animal FeedMill</div>
+      </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="products home-products">
+  <h2>Our Products</h2>
+  <div class="product-grid">
+    <!-- cards -->
+    <div class="product-card">
+      <img src="Imgs/P.JPG" alt="Raw Milk">
+      <h3>Raw Milk</h3>
+      <select class="size-select" data-product="Raw Milk" data-image="Imgs/P.JPG">
+        <option value="50">500ml - 50 Ksh</option>
+      </select>
+      <span class="price">50 Ksh</span>
+      <button onclick="addToCartFromSelect(this)">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+      <img src="Imgs/NM.JPG" alt="ESL Milk">
+      <h3>ESL Milk</h3>
+      <select class="size-select" data-product="ESL Milk" data-image="Imgs/NM.JPG">
+        <option value="660">500ml - 660 Ksh</option>
+        <option value="525">200ml - 525 Ksh</option>
+      </select>
+      <span class="price">660 Ksh</span>
+      <button onclick="addToCartFromSelect(this)">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+      <img src="Imgs/F.JPG" alt="Yoghurt Strawberry">
+      <h3>Yoghurt - Strawberry</h3>
+      <select class="size-select" data-product="Yoghurt - Strawberry" data-image="Imgs/F.JPG">
+        <option value="90">500ml - 90 Ksh</option>
+        <option value="50">250ml - 50 Ksh</option>
+        <option value="35">150ml - 35 Ksh</option>
+        <option value="25">100ml - 25 Ksh</option>
+      </select>
+      <span class="price">90 Ksh</span>
+      <button onclick="addToCartFromSelect(this)">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+      <img src="Imgs/Y.JPG" alt="Yoghurt Vanilla">
+      <h3>Yoghurt - Vanilla</h3>
+      <select class="size-select" data-product="Yoghurt - Vanilla" data-image="Imgs/Y.JPG">
+        <option value="90">500ml - 90 Ksh</option>
+        <option value="50">250ml - 50 Ksh</option>
+        <option value="35">150ml - 35 Ksh</option>
+        <option value="25">100ml - 25 Ksh</option>
+      </select>
+      <span class="price">90 Ksh</span>
+      <button onclick="addToCartFromSelect(this)">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+      <img src="Imgs/VG.JPG" alt="Animal FeedMill">
+      <h3>Animal FeedMill</h3>
+      <select class="size-select" data-product="Animal FeedMill" data-image="Imgs/VG.JPG">
+        <option value="660">500ml - 660 Ksh</option>
+        <option value="525">200ml - 525 Ksh</option>
+      </select>
+      <span class="price">660 Ksh</span>
+      <button onclick="addToCartFromSelect(this)">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- ✅ Proceed to Order button -->
+  <div style="margin-top:20px; text-align:center;">
+    <button onclick="openCart()">Proceed to Order</button>
+  </div>
+</section>
+
+<!-- ✅ Cart Popup -->
+<div id="cartPopup">
+  <h3>Your Cart</h3>
+  <table id="cartTable" style="width:100%; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Item</th>
+        <th>Size</th>
+        <th>Qty</th>
+        <th>Total</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <h4 id="cartTotal">Total: 0 Ksh</h4>
+  <button onclick="checkout()">Confirm Order</button>
+  <button onclick="closeCart()">Close</button>
+</div>
+
+<style>
+/* ✅ Popup Base */
+#cartPopup {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  max-height: 70%;
+  background: #fff;
+  box-shadow: 0 -4px 15px rgba(0,0,0,0.3);
+  padding: 20px;
+  overflow-y: auto;
+  border-radius: 15px 15px 0 0;
+  z-index: 9999;
+  transition: bottom 0.4s ease-in-out;
+}
+
+/* When visible */
+#cartPopup.active {
+  bottom: 0;
+}
+</style>
+
+<script>
+let cart = [];
+
+// Add product to cart
+function addToCartFromSelect(button) {
+    const productCard = button.closest('.product-card');
+    const select = productCard.querySelector('.size-select');
+    const product = select.getAttribute('data-product');
+    const image = select.getAttribute('data-image');
+    const price = parseInt(select.value);
+    const size = select.options[select.selectedIndex].text;
+
+    // Check if already in cart
+    let existing = cart.find(item => item.product === product && item.size === size);
+    if (existing) {
+        existing.quantity++;
+        existing.total = existing.quantity * existing.price;
+    } else {
+        cart.push({ product, image, size, price, quantity: 1, total: price });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(product + " (" + size + ") added to cart!");
+}
+
+// Open cart popup (slide up)
+function openCart() {
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+    renderCart();
+    document.getElementById("cartPopup").classList.add("active");
+}
+
+// Close cart popup (slide down)
+function closeCart() {
+    document.getElementById("cartPopup").classList.remove("active");
+}
+
+// Render cart table
+function renderCart() {
+    let tbody = document.querySelector("#cartTable tbody");
+    tbody.innerHTML = "";
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        total += item.total;
+        tbody.innerHTML += `
+            <tr>
+                <td><img src="${item.image}" width="50"></td>
+                <td>${item.product}</td>
+                <td>${item.size}</td>
+                <td>
+                  <button onclick="updateQty(${index}, -1)">-</button>
+                  ${item.quantity}
+                  <button onclick="updateQty(${index}, 1)">+</button>
+                </td>
+                <td>${item.total} Ksh</td>
+                <td><button onclick="removeItem(${index})">❌</button></td>
+            </tr>
+        `;
+    });
+
+    document.getElementById("cartTotal").innerText = "Total: " + total + " Ksh";
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+// Update quantity
+function updateQty(index, change) {
+    cart[index].quantity += change;
+    if (cart[index].quantity <= 0) {
+        cart.splice(index, 1);
+    } else {
+        cart[index].total = cart[index].quantity * cart[index].price;
+    }
+    renderCart();
+}
+
+// Remove item
+function removeItem(index) {
+    cart.splice(index, 1);
+    renderCart();
+}
+
+// Checkout
+function checkout() {
+    if (cart.length === 0) {
+        alert("Cart is empty!");
+        return;
+    }
+    window.location.href = "order.html";
+}
+</script>
+
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>📞 0702 822 215 | ✉️ martsonltd2025@outlook.com</p>
+    <div class="social">
+      <a href="https://instagram.com/yummydairy" target="_blank">📸 Instagram</a>
+      <a href="https://wa.me/254702822215" target="_blank">💬 WhatsApp</a>
+      <a href="https://facebook.com/yummydairy" target="_blank">👍 Facebook</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      document.getElementById('cart-count').textContent = cart.length;
+
+      document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', () => {
+          const name = button.dataset.name;
+          const price = button.dataset.price;
+          const cart = JSON.parse(localStorage.getItem('cart')) || [];
+          cart.push({ name, price });
+          localStorage.setItem('cart', JSON.stringify(cart));
+          document.getElementById('cart-count').textContent = cart.length;
+          alert(`${name} added to cart!`);
+        });
+      });
+
+      // Slide transition
+      let currentSlide = 0;
+      const slides = document.querySelectorAll('.hero-banner-slideshow .slide');
+      setInterval(() => {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+      }, 4000);
+    });
+
+    // Sticky header
+    window.addEventListener("scroll", function () {
+      const header = document.querySelector(".header");
+      if (window.scrollY > 20) {
+        header.classList.add("sticky");
+      } else {
+        header.classList.remove("sticky");
+      }
+    });
+  </script>
+</body>
+</html>

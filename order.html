@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Review & Adjust Order - Almond AgriBusiness</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    td, th {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+    }
+    input[type="number"] {
+      width: 60px;
+    }
+    form input, form select {
+      display: block;
+      margin: 10px 0;
+      padding: 8px;
+      width: 100%;
+      max-width: 300px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ NAV BAR -->
+  <header class="header">
+    <div class="logo">🥛 Almond AgriBusiness</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="shop.html">Shop</a>
+      <a href="order.html" class="active">Order</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="cta">
+      <a href="#">Login</a>
+      <a href="#" class="cart">🛒</a>
+    </div>
+  </header>
+  <!-- Add this below <header> -->
+<section class="hero-banner-slideshow">
+  <div class="slide active" style="background-image: url('Imgs/F.jpg');"></div>
+  <div class="slide" style="background-image: url('Imgs/N.jpg');"></div>
+  <div class="slide" style="background-image: url('Imgs/T.jpg');"></div>
+  <div class="slide" style="background-image: url('Imgs/K.jpg');"></div>
+
+  <div class="hero-content">
+    <h1>Welcome to Yummy Dairy</h1>
+    <p>Fresh and natural dairy products at your doorstep.</p>
+    <a href="shop.html" class="shop-now-btn">🛒 Shop Now</a>
+  </div>
+</section>
+
+
+  <!-- ✅ PAGE CONTENT -->
+  <main class="order-layout">
+  <div class="order-form-section">
+    <h2>📝 Customer Details</h2>
+    <form id="order-form">
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="tel" id="phone" placeholder="Phone Number" required>
+      <input type="email" id="email" placeholder="Email">
+      <input type="date" id="date" required>
+      <input type="time" id="time" required>
+      <select id="type">
+        <option value="Pickup">Pickup</option>
+        <option value="Delivery">Delivery</option>
+      </select>
+      <button type="submit">✅ Submit Order</button>
+    </form>
+  </div>
+
+  <aside class="order-summary">
+    <h2>🛒 Your Order</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Item</th>
+          <th>Qty</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="cart-items"></tbody>
+    </table>
+    <p><strong>Grand Total:</strong> <span id="cart-total">0</span> Ksh</p>
+  </aside>
+</main>
+
+
+  <!-- ✅ FOOTER -->
+  <footer class="footer">
+    <p>📞 0702 822 215 | ✉️ martsonltd2025@outlook.com</p>
+    <div class="social">
+      <a href="#">Facebook</a> |
+      <a href="#">Instagram</a> |
+      <a href="#">WhatsApp</a>
+    </div>
+  </footer>
+
+  <!-- ✅ SCRIPT -->
+  <script>
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotalElement = document.getElementById('cart-total');
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function updateCartDisplay() {
+      cartItemsContainer.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const quantity = item.quantity || 1;
+        const unitPrice = parseFloat(item.price);
+        const itemTotal = unitPrice * quantity;
+        total += itemTotal;
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><img src="${item.image}" alt="${item.name}"></td>
+          <td>${item.name}</td>
+          <td>${unitPrice.toFixed(0)}</td>
+          <td><input type="number" value="${quantity}" min="1" onchange="changeQuantity(${index}, this.value)"></td>
+          <td>${itemTotal.toFixed(0)}</td>
+          <td><button onclick="removeItem(${index})">Remove</button></td>
+        `;
+        cartItemsContainer.appendChild(row);
+      });
+
+      cartTotalElement.textContent = total.toFixed(0);
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function changeQuantity(index, newQty) {
+      cart[index].quantity = parseInt(newQty);
+      updateCartDisplay();
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateCartDisplay();
+    }
+
+    document.getElementById('order-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const orderDetails = {
+        name: document.getElementById('name').value,
+        phone: document.getElementById('phone').value,
+        email: document.getElementById('email').value,
+        date: document.getElementById('date').value,
+        time: document.getElementById('time').value,
+        type: document.getElementById('type').value
+      };
+      localStorage.setItem('orderDetails', JSON.stringify(orderDetails));
+      window.location.href = 'invoice.html';
+    });
+
+    updateCartDisplay();
+  </script>
+
+</body>
+</html>

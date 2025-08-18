@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Invoice - Almond AgriBusiness</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .invoice {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      border: 1px solid #ccc;
+      background: #fff;
+      font-family: Arial, sans-serif;
+    }
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 0;
+    }
+    .subheading {
+      text-align: center;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      color: #666;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.5rem;
+      text-align: center;
+    }
+    .totals {
+      text-align: right;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+    .details {
+      margin-top: 1rem;
+      line-height: 1.6;
+    }
+    .print-btn, .home-btn {
+      display: inline-block;
+      margin: 1.5rem 1rem 0 0;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      background: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .home-btn {
+      background: #007bff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="invoice">
+    <h1>Almond AgriBusiness</h1>
+    <h2>Invoice</h2>
+    <div class="subheading">
+      Invoice #: <span id="invoice-number"></span> |
+      Date: <span id="invoice-date"></span>
+    </div>
+
+    <div class="details" id="customer-details"></div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Unit Price (Ksh)</th>
+          <th>Quantity</th>
+          <th>Total (Ksh)</th>
+        </tr>
+      </thead>
+      <tbody id="invoice-items"></tbody>
+    </table>
+
+    <div class="totals">
+      Grand Total: <span id="invoice-total">Ksh 0</span>
+    </div>
+
+    <button class="print-btn" onclick="printInvoice()">🖨️ Print Invoice</button>
+    <a href="index.html" class="home-btn">🏠 Back to Home</a>
+  </div>
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const order = JSON.parse(localStorage.getItem('orderDetails')) || {};
+
+    const itemsContainer = document.getElementById('invoice-items');
+    const totalElement = document.getElementById('invoice-total');
+    const customerDetails = document.getElementById('customer-details');
+    const invoiceNumber = document.getElementById('invoice-number');
+    const invoiceDate = document.getElementById('invoice-date');
+
+    // Generate invoice number and date
+    const now = new Date();
+    invoiceDate.textContent = now.toLocaleDateString();
+    invoiceNumber.textContent = 'INV-' + now.getTime();
+
+    let total = 0;
+    itemsContainer.innerHTML = '';
+
+    if (cart.length > 0) {
+      cart.forEach(item => {
+        const quantity = item.quantity || 1;
+        const price = parseFloat(item.price) || 0;
+        const itemTotal = quantity * price;
+        total += itemTotal;
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.name}</td>
+          <td>${price.toFixed(0)}</td>
+          <td>${quantity}</td>
+          <td>${itemTotal.toFixed(0)}</td>
+        `;
+        itemsContainer.appendChild(row);
+      });
+    } else {
+      itemsContainer.innerHTML = '<tr><td colspan="4">No items in cart.</td></tr>';
+    }
+
+    totalElement.textContent = `Ksh ${total.toFixed(0)}`;
+
+    customerDetails.innerHTML = `
+      <p><strong>Name:</strong> ${order.name || '-'}</p>
+      <p><strong>Phone:</strong> ${order.phone || '-'}</p>
+      <p><strong>Email:</strong> ${order.email || '-'}</p>
+      <p><strong>Preferred Date:</strong> ${order.date || '-'}</p>
+      <p><strong>Time:</strong> ${order.time || '-'}</p>
+      <p><strong>Order Type:</strong> ${order.type || '-'}</p>
+    `;
+
+    function printInvoice() {
+      window.print();
+      // Optional: Clear cart after printing
+      localStorage.removeItem('cart');
+      localStorage.removeItem('orderDetails');
+    }
+  </script>
+
+</body>
+</html>

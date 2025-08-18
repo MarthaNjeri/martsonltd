@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shop - Almond AgriBusiness</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo">🥛 Almond AgriBusiness</div>
+    <nav>
+      <a href="index.html">Home</a> 
+      <a href="about.html">About</a>
+      <a href="shop.html" class="active">Shop</a>
+      <a href="order.html">Order</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="cta">
+      <a href="#">Login</a>
+      <a href="#" class="cart">🛒</a>
+    </div>
+  </header>
+
+  <section class="hero-banner-slideshow">
+    <div class="slide active" style="background-image: url('Imgs/F.jpg');"></div>
+    <div class="slide" style="background-image: url('Imgs/N.jpg');"></div>
+    <div class="slide" style="background-image: url('Imgs/T.jpg');"></div>
+    <div class="slide" style="background-image: url('Imgs/K.jpg');"></div>
+
+    <div class="hero-content">
+      <h1>Welcome to Almond AgriBusiness</h1>
+      <p>Fresh and natural dairy products at your doorstep.</p>
+      <a href="shop.html" class="shop-now-btn">🛒 Shop Now</a>
+    </div>
+  </section>
+
+  <section class="page-banner">
+    <h1>Our Dairy Products</h1>
+    <p>Browse our wide selection of fresh and delicious dairy items.</p>
+  </section>
+
+  <div class="main-content shop-products">
+    <section id="products">
+      <h2>Shop Our Products</h2>
+      <div class="product-grid">
+        <div class="product-card">
+          <img src="Imgs/P.JPG" alt="Raw Milk">
+          <h3>Raw Milk</h3>
+          <select class="size-select" data-product="Raw Milk">
+            <option value="50">500ml - 50 Ksh</option>
+          </select>
+          <span class="price">50 Ksh</span>
+          <button onclick="addToCartFromSelect(this)">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="Imgs/NM.JPG" alt="ESL Milk">
+          <h3>ESL Milk</h3>
+          <select class="size-select" data-product="ESL Milk">
+            <option value="660">500ml - 660 Ksh</option>
+            <option value="525">200ml - 525 Ksh</option>
+          </select>
+          <span class="price">660 Ksh</span>
+          <button onclick="addToCartFromSelect(this)">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="Imgs/F.JPG" alt="Yoghurt Strawberry">
+          <h3>Yoghurt - Strawberry</h3>
+          <select class="size-select" data-product="Yoghurt - Strawberry">
+            <option value="90">500ml - 90 Ksh</option>
+            <option value="50">250ml - 50 Ksh</option>
+            <option value="35">150ml - 35 Ksh</option>
+            <option value="25">100ml - 25 Ksh</option>
+          </select>
+          <span class="price">90 Ksh</span>
+          <button onclick="addToCartFromSelect(this)">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="Imgs/Y.JPG" alt="Yoghurt Vanilla">
+          <h3>Yoghurt - Vanilla</h3>
+          <select class="size-select" data-product="Yoghurt - Vanilla">
+            <option value="90">500ml - 90 Ksh</option>
+            <option value="50">250ml - 50 Ksh</option>
+            <option value="35">150ml - 35 Ksh</option>
+            <option value="25">100ml - 25 Ksh</option>
+          </select>
+          <span class="price">90 Ksh</span>
+          <button onclick="addToCartFromSelect(this)">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="Imgs/VG.JPG" alt="Animal FeedMill">
+          <h3>Animal FeedMill</h3>
+          <select class="size-select" data-product="Animal FeedMill">
+            <option value="660">500ml - 660 Ksh</option>
+            <option value="525">200ml - 525 Ksh</option>
+          </select>
+          <span class="price">660 Ksh</span>
+          <button onclick="addToCartFromSelect(this)">Add to Cart</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <p>📞 0702 822 215 | ✉️ martsonltd2025@outlook.com</p>
+    <div class="social">
+      <a href="https://instagram.com/yummydairy" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="https://wa.me/254702822215" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      <a href="https://wa.me/254700123456" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+    </div>
+  </footer>
+
+  <script>
+    function addToCartFromSelect(button) {
+      const card = button.closest('.product-card');
+      const select = card.querySelector('.size-select');
+      const productName = select.getAttribute('data-product');
+      const selectedOption = select.options[select.selectedIndex];
+      const price = parseFloat(selectedOption.value);
+      const image = card.querySelector('img').src;
+
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      const existingItemIndex = cart.findIndex(
+        item => item.name === productName && item.price === price
+      );
+
+      if (existingItemIndex >= 0) {
+        cart[existingItemIndex].quantity += 1;
+      } else {
+        cart.push({
+          name: productName,
+          price: price,
+          quantity: 1,
+          image: image
+        });
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      window.location.href = "order.html";
+    }
+  </script>
+</body>
+</html>
